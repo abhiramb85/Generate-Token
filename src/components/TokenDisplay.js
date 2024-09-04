@@ -37,19 +37,23 @@ const TokenDisplay = ({ blueTokens, redTokens }) => {
 
   return (
     <>
-      <Box my={4}>
-        <Typography variant="h6" gutterBottom>Blue Tokens</Typography>
-        <Grid container spacing={2}>
-          {renderRows(blueTokens)}
-        </Grid>
-      </Box>
+      {blueTokens && blueTokens.length > 0 && (
+        <Box my={4}>
+          <Typography variant="h6" gutterBottom>Blue Tokens</Typography>
+          <Grid container spacing={2}>
+            {renderRows(blueTokens)}
+          </Grid>
+        </Box>
+      )}
 
-      <Box my={4}>
-        <Typography variant="h6" gutterBottom>Red Tokens</Typography>
-        <Grid container spacing={2}>
-          {renderRows(redTokens)}
-        </Grid>
-      </Box>
+      {redTokens && redTokens.length > 0 && (
+        <Box my={4}>
+          <Typography variant="h6" gutterBottom>Red Tokens</Typography>
+          <Grid container spacing={2}>
+            {renderRows(redTokens)}
+          </Grid>
+        </Box>
+      )}
     </>
   );
 };
