@@ -32,14 +32,15 @@ function App() {
     }
     return chunkArray(tokens, perRow);
   };
-
+  
   const chunkArray = (array, size) => {
-    let result = [];
+    const result = [];
     for (let i = 0; i < array.length; i += size) {
       result.push(array.slice(i, i + size));
     }
     return result;
   };
+  
 
   return (
     <Container>

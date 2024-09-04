@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Grid } from '@mui/material';
+import { TextField, Button, Grid } from '@mui/material'; // Use stable Grid
 
 const TokenForm = ({ onGenerate, onClear }) => {
-  const [blueData, setBlueData] = useState({ count: 0, prefix: '', perRow: 1 });
-  const [redData, setRedData] = useState({ count: 0, prefix: '', perRow: 1 });
+  const [blueData, setBlueData] = useState({ count: '', prefix: '', perRow: '' });
+  const [redData, setRedData] = useState({ count: '', prefix: '', perRow: '' });
 
   // Clear form inputs when the clear button is pressed
   useEffect(() => {
-    setBlueData({ count: 0, prefix: '', perRow: 1 });
-    setRedData({ count: 0, prefix: '', perRow: 1 });
+    setBlueData({ count: '', prefix: '', perRow: '' });
+    setRedData({ count: '', prefix: '', perRow: '' });
   }, [onClear]);
 
   const handleChange = (e, color) => {

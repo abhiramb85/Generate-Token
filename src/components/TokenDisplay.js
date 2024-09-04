@@ -9,7 +9,11 @@ const TokenDisplay = ({ blueTokens, redTokens }) => {
     margin: '5px',
     borderRadius: '5px',
     fontWeight: 'bold',
-    color: '#fff'
+    color: '#fff',
+    textAlign: 'center', // Center the text
+    width: '50px',       // Fixed width
+    height: '50px',      // Fixed height
+    lineHeight: '30px',  // Vertical alignment for the text
   };
 
   return (
