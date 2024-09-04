@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
 
 const TokenForm = ({ onGenerate, onClear }) => {
   const [blueData, setBlueData] = useState({ count: 0, prefix: '', perRow: 1 });
   const [redData, setRedData] = useState({ count: 0, prefix: '', perRow: 1 });
+
+  // Clear form inputs when the clear button is pressed
+  useEffect(() => {
+    setBlueData({ count: 0, prefix: '', perRow: 1 });
+    setRedData({ count: 0, prefix: '', perRow: 1 });
+  }, [onClear]);
 
   const handleChange = (e, color) => {
     const { name, value } = e.target;
@@ -16,12 +22,6 @@ const TokenForm = ({ onGenerate, onClear }) => {
 
   const handleGenerateClick = () => {
     onGenerate(blueData, redData);
-  };
-
-  const handleClearClick = () => {
-    setBlueData({ count: 0, prefix: '', perRow: 1 });
-    setRedData({ count: 0, prefix: '', perRow: 1 });
-    onClear();
   };
 
   return (
@@ -84,7 +84,7 @@ const TokenForm = ({ onGenerate, onClear }) => {
         <Button variant="contained" color="primary" onClick={handleGenerateClick}>
           Generate
         </Button>
-        <Button variant="outlined" color="secondary" onClick={handleClearClick} style={{ marginLeft: '10px' }}>
+        <Button variant="outlined" color="secondary" onClick={onClear} style={{ marginLeft: '10px' }}>
           Clear
         </Button>
       </Grid>
