@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import TokenForm from './components/TokenForm';
 import TokenDisplay from './components/TokenDisplay';
-import { Container, Box } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
 
 function App() {
   const [tokens, setTokens] = useState({ blueTokens: [], redTokens: [] });
 
   const handleGenerate = (blueData, redData) => {
-    const blueTokens = generateTokens(blueData.count, blueData.prefix, blueData.perRow, 'blue');
-    const redTokens = generateTokens(redData.count, redData.prefix, redData.perRow, 'red');
-    setTokens({ blueTokens, redTokens });
+    // Check if inputs are valid
+    if (blueData.count > 0 || redData.count > 0) {
+      const blueTokens = blueData.count > 0 ? generateTokens(blueData.count, blueData.prefix, blueData.perRow, 'blue') : [];
+      const redTokens = redData.count > 0 ? generateTokens(redData.count, redData.prefix, redData.perRow, 'red') : [];
+      setTokens({ blueTokens, redTokens });
+    }
   };
 
   const handleClear = () => {
@@ -35,8 +38,22 @@ function App() {
   return (
     <Container>
       <Box my={4}>
+        <Typography variant="h4" gutterBottom align="center">
+          Token Generator Application
+        </Typography>
         <TokenForm onGenerate={handleGenerate} onClear={handleClear} />
-        <TokenDisplay blueTokens={tokens.blueTokens} redTokens={tokens.redTokens} />
+        {tokens.blueTokens.length > 0 && (
+          <Box my={4}>
+            <Typography variant="h6" gutterBottom>Blue Tokens</Typography>
+            <TokenDisplay blueTokens={tokens.blueTokens} redTokens={[]} />
+          </Box>
+        )}
+        {tokens.redTokens.length > 0 && (
+          <Box my={4}>
+            <Typography variant="h6" gutterBottom>Red Tokens</Typography>
+            <TokenDisplay blueTokens={[]} redTokens={tokens.redTokens} />
+          </Box>
+        )}
       </Box>
     </Container>
   );
