@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TokenForm from './components/TokenForm';
 import TokenDisplay from './components/TokenDisplay';
 import { Container, Box, Typography } from '@mui/material';
 
 function App() {
   const [tokens, setTokens] = useState({ blueTokens: [], redTokens: [] });
+  const [isGenerated, setIsGenerated] = useState(false); // Track if tokens have been generated
+
+  useEffect(() => {
+    if (tokens.blueTokens.length === 0 && tokens.redTokens.length === 0) {
+      setIsGenerated(false);
+    } else {
+      setIsGenerated(true);
+    }
+  }, [tokens]);
 
   const handleGenerate = (blueData, redData) => {
-    // Check if inputs are valid
-    if (blueData.count > 0 || redData.count > 0) {
-      const blueTokens = blueData.count > 0 ? generateTokens(blueData.count, blueData.prefix, blueData.perRow, 'blue') : [];
-      const redTokens = redData.count > 0 ? generateTokens(redData.count, redData.prefix, redData.perRow, 'red') : [];
-      setTokens({ blueTokens, redTokens });
-    }
+    const blueTokens = generateTokens(blueData.count, blueData.prefix, blueData.perRow, 'blue');
+    const redTokens = generateTokens(redData.count, redData.prefix, redData.perRow, 'red');
+    setTokens({ blueTokens, redTokens });
+    setIsGenerated(true); // Set to true when tokens are generated
   };
 
   const handleClear = () => {
     setTokens({ blueTokens: [], redTokens: [] });
+    setIsGenerated(false); // Set to false when tokens are cleared
   };
 
   const generateTokens = (count, prefix, perRow, color) => {
@@ -42,17 +50,10 @@ function App() {
           Token Generator Application
         </Typography>
         <TokenForm onGenerate={handleGenerate} onClear={handleClear} />
-        {tokens.blueTokens.length > 0 && (
-          <Box my={4}>
-            <Typography variant="h6" gutterBottom>Blue Tokens</Typography>
-            <TokenDisplay blueTokens={tokens.blueTokens} redTokens={[]} />
-          </Box>
-        )}
-        {tokens.redTokens.length > 0 && (
-          <Box my={4}>
-            <Typography variant="h6" gutterBottom>Red Tokens</Typography>
-            <TokenDisplay blueTokens={[]} redTokens={tokens.redTokens} />
-          </Box>
+        {isGenerated && (
+          <>
+            <TokenDisplay blueTokens={tokens.blueTokens} redTokens={tokens.redTokens} />
+          </>
         )}
       </Box>
     </Container>
